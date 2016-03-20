@@ -10,6 +10,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
+import org.klest.javatutorial.messengerclient.model.Comment;
 import org.klest.javatutorial.messengerclient.model.Message;
 
 
@@ -51,15 +52,15 @@ public class MyResource {
     	
     	GenericType<List<Comment>> list = new GenericType<List<Comment>>() {};
     	
-    	List<Message> messages = client
+    	List<Comment> comments = client
     			.target(RestServiceURL)
-    			.path("/messages")
+    			.path("/{messageId}/comments")
+    			.resolveTemplate("messageId", messageId)
     			.request(MediaType.APPLICATION_JSON)
     			.get(list);
     	
-    	for(int i = 0; i < messages.size(); i++)
-    	System.out.println(messages.get(i).toString());
+    	for(int i = 0; i < comments.size(); i++)
+    	System.out.println(comments.get(i).toString());
     }
-    	
-    }
+    
 }
