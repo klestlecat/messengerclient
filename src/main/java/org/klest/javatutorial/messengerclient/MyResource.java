@@ -7,6 +7,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
@@ -31,6 +33,8 @@ public class MyResource {
     	webclient.initialise();
     	
     	webclient.getMessages();
+    	
+    	webclient.getComments(2);
     	//TO DO
     }
     
@@ -48,13 +52,18 @@ public class MyResource {
     	System.out.println(messages.get(i).toString());
     }
     
+    private void deleteMessages(int messageId){
+    	
+    }
+    
+    
     private void getComments (int messageId){
     	
     	GenericType<List<Comment>> list = new GenericType<List<Comment>>() {};
     	
     	List<Comment> comments = client
     			.target(RestServiceURL)
-    			.path("/{messageId}/comments")
+    			.path("/messages/{messageId}/comments")
     			.resolveTemplate("messageId", messageId)
     			.request(MediaType.APPLICATION_JSON)
     			.get(list);
@@ -63,4 +72,17 @@ public class MyResource {
     	System.out.println(comments.get(i).toString());
     }
     
+  /*  private void addComment(String comment){
+    	
+    	String addcomment = client
+    			.target(RestServiceURL)
+    			.path("/{messageId}")
+    			.resolveTemplate("messageId", 1)
+    			.request(MediaType.APPLICATION_JSON)
+    			.post(comment);
+    	
+   */ 	
+    	
+    	
+   // }
 }
