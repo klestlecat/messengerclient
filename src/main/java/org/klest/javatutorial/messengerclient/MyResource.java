@@ -54,6 +54,12 @@ public class MyResource {
     
     private void deleteMessages(int messageId){
     	
+    	String delete = client
+    			.target(RestServiceURL)
+    			.path("/messages/{messageId}")
+    			.resolveTemplate("messageId", messageId)
+    			.request(MediaType.APPLICATION_JSON)
+    			.delete(String.class);
     }
     
     
@@ -76,7 +82,7 @@ public class MyResource {
     	
     	String addcomment = client
     			.target(RestServiceURL)
-    			.path("/{messageId}")
+    			.path("/messages/{messageId}")
     			.resolveTemplate("messageId", 1)
     			.request(MediaType.APPLICATION_JSON)
     			.post(comment);
