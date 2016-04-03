@@ -1,5 +1,6 @@
 package org.klest.javatutorial.messengerclient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,6 +35,9 @@ public class MyResource {
     	
     	webclient.initialise();
     	
+    	List <Message> messageList = new ArrayList<Message>();
+    	List <Comment> commentList = new ArrayList<Comment>();
+    	
     	String author;
     	Scanner in = new Scanner(System.in);
     	
@@ -41,14 +45,19 @@ public class MyResource {
     	System.out.println("Please type your username");
     	author = in.nextLine();
     	
-    	System.out.println("Welcome " + author + " these are all the messages /n");
+    	System.out.println("Welcome " + author + " You can type one of the following: /n");
     	
-    	webclient.getMessages();
     	
-    	System.out.println("/nType m - add new messages /nType c - to see comments /nd - Delete message");
+    	
+    	System.out.println("/nm - see all messages /na - add new messages /nType c - to see comments /nd - Delete message");
     	
     	while(true){
 	    	if (in.nextLine().equals("m")){
+	    		//see all messages
+	    		webclient.getMessages();
+	    	}
+	    	
+	    	else if (in.nextLine().equals("a")){
 	    		//add new message
 	    	}
 	    	
@@ -134,7 +143,5 @@ public class MyResource {
     			.request(MediaType.APPLICATION_JSON)
     			.post(Entity.entity(comment, MediaType.APPLICATION_JSON));
     	}
-    
-    
     
 }
