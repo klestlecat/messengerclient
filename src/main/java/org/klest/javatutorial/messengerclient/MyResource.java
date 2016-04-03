@@ -41,6 +41,7 @@ public class MyResource {
     	String author;
     	String message;
     	int id;
+    	int commentid;
     	
     	Scanner in = new Scanner(System.in);
     	
@@ -82,17 +83,24 @@ public class MyResource {
 	    		for(int i = 0; i < commentList.size(); i++)
 	    	    	System.out.println(commentList.get(i).toString());
 	    		
-	    		
-	    		
 	    		while(true){
 	    			System.out.println("\nPlease choose one of the following: \na - Add Comment \nd - Delete Comment");
 	    			
 	    			if (in.nextLine().equals("a")){
-	    				//add comment
+	    				
+	    				System.out.println("please enter yout message:");
+	    				message = in.nextLine();
+	    				
+	    				webclient.addComment(new Comment(commentList.size(), message, author), id);
 	    			}
 	    			
 	    			else if (in.nextLine().equals("d")){
 	    				//delete comment
+	    				System.out.println("Please enter the comment's ID...");
+	    				commentid = in.nextInt();
+	    				
+	    				webclient.deleteComment(id, commentid);
+	    				
 	    			}
 	    			
 	    			else if (in.nextLine().equals("exit")){
@@ -180,5 +188,16 @@ public class MyResource {
     			.request(MediaType.APPLICATION_JSON)
     			.post(Entity.entity(comment, MediaType.APPLICATION_JSON));
     	}
+    
+    private void deleteComment(int messageID, int commentID){
+    	
+    	String delete = client
+    			.target(RestServiceURL)
+    			.path("/messages/{messageId}/{commentId}")
+    			.resolveTemplate("messageId", messageID)
+    			.resolveTemplate("commentId", commentID)
+    			.request(MediaType.APPLICATION_JSON)
+    			.delete(String.class);
+    }
     
 }
