@@ -45,5 +45,8 @@ public class Comment {
 		this.author = author;
 	}
     
-    
+    @Override
+    public String toString(){
+    return this.id + ". Author: "+ this.author + "/n" + this.message + "/nCreated: " + this.created.toString();
+    }
 }

@@ -66,7 +66,7 @@ public class Message {
 	
 	@Override
 	public String toString(){
-		return this.message;
+		return this.id + ". Author: "+ this.author + "/n" + this.message + "/nCreated: " + this.created.toString();
 	}
 	
 }

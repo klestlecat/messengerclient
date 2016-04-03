@@ -1,6 +1,7 @@
 package org.klest.javatutorial.messengerclient;
 
 import java.util.List;
+import java.util.Scanner;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -33,7 +34,43 @@ public class MyResource {
     	
     	webclient.initialise();
     	
+    	String author;
+    	Scanner in = new Scanner(System.in);
+    	
+    	System.out.println("Welcome to messenger");
+    	System.out.println("Please type your username");
+    	author = in.nextLine();
+    	
+    	System.out.println("Welcome " + author + " these are all the messages /n");
+    	
     	webclient.getMessages();
+    	
+    	System.out.println("/nType m - add new messages /nType c - to see comments /nd - Delete message");
+    	
+    	while(true){
+	    	if (in.nextLine().equals("m")){
+	    		//add new message
+	    	}
+	    	
+	    	else if (in.nextLine().equals("c")){
+	    		// see comments
+	    		//under menu comments
+	    	}
+	    	
+	    	else if (in.nextLine().equals("d")){
+	    		//delete messages
+	    	}
+	    	
+	    	else if (in.nextLine().equals("exit")){
+	    		break;
+	    	}
+	    	
+	    	else {
+	    		System.out.println("The command does not exist");
+	    	}
+    	}
+    	
+    	
     	
     	webclient.getComments(2);
     	//TO DO
