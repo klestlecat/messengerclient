@@ -39,6 +39,9 @@ public class MyResource {
     	List <Comment> commentList = new ArrayList<Comment>();
     	
     	String author;
+    	String message;
+    	int id;
+    	
     	Scanner in = new Scanner(System.in);
     	
     	System.out.println("Welcome to messenger");
@@ -54,20 +57,41 @@ public class MyResource {
     	while(true){
 	    	if (in.nextLine().equals("m")){
 	    		//see all messages
-	    		webclient.getMessages();
+	    		webclient.getMessages(messageList);
+	    		
+	    		for(int i = 0; i < messageList.size(); i++){
+	    	    	System.out.println(messageList.get(i).toString());
+	    		}
 	    	}
 	    	
 	    	else if (in.nextLine().equals("a")){
 	    		//add new message
+	    		System.out.println("Pleasse enter your message: ");
+	    		message = in.nextLine();
+	    		
+	    		webclient.addMessage(new Message(messageList.size(), message, author));
 	    	}
 	    	
 	    	else if (in.nextLine().equals("c")){
 	    		// see comments
+	    		System.out.println("Please enter the ID of the message");
+	    		id = in.nextInt();
+	    		
+	    		webclient.getComments(id, commentList);
+	    		
+	    		for(int i = 0; i < commentList.size(); i++)
+	    	    	System.out.println(commentList.get(i).toString());
 	    		//under menu comments
+	    		
 	    	}
 	    	
 	    	else if (in.nextLine().equals("d")){
 	    		//delete messages
+	    		System.out.println("Please enter the ID of the message you want to delete...");
+	    		id = in.nextInt();
+	    		
+	    		webclient.deleteMessages(id);
+	    		
 	    	}
 	    	
 	    	else if (in.nextLine().equals("exit")){
@@ -81,22 +105,17 @@ public class MyResource {
     	
     	
     	
-    	webclient.getComments(2);
-    	//TO DO
     }
     
-    private void getMessages(){
+    private void getMessages(List <Message> message){
     	
     	GenericType<List<Message>> list = new GenericType<List<Message>>() {};
     	
-    	List<Message> messages = client
+    	message = client
     			.target(RestServiceURL)
     			.path("/messages")
     			.request(MediaType.APPLICATION_JSON)
     			.get(list);
-    	
-    	for(int i = 0; i < messages.size(); i++)
-    	System.out.println(messages.get(i).toString());
     }
     
     private void addMessage(Message message){
@@ -119,19 +138,17 @@ public class MyResource {
     }
     
     
-    private void getComments (int messageId){
+    private void getComments (int messageId, List<Comment> comments){
     	
     	GenericType<List<Comment>> list = new GenericType<List<Comment>>() {};
     	
-    	List<Comment> comments = client
+    	comments = client
     			.target(RestServiceURL)
     			.path("/messages/{messageId}/comments")
     			.resolveTemplate("messageId", messageId)
     			.request(MediaType.APPLICATION_JSON)
     			.get(list);
     	
-    	for(int i = 0; i < comments.size(); i++)
-    	System.out.println(comments.get(i).toString());
     }
     
     private void addComment(Comment comment, int messageID){
