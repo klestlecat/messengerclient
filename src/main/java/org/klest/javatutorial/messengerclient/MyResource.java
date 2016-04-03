@@ -11,6 +11,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.klest.javatutorial.messengerclient.model.Comment;
 import org.klest.javatutorial.messengerclient.model.Message;
@@ -52,6 +53,15 @@ public class MyResource {
     	System.out.println(messages.get(i).toString());
     }
     
+    private void addMessage(Message message){
+    	
+    	Response addmessage = client
+    			.target(RestServiceURL)
+    			.path("/messages")
+    			.request(MediaType.APPLICATION_JSON)
+    			.post(Entity.entity(message, MediaType.APPLICATION_JSON));
+    	}
+    
     private void deleteMessages(int messageId){
     	
     	String delete = client
@@ -78,17 +88,16 @@ public class MyResource {
     	System.out.println(comments.get(i).toString());
     }
     
-  /*  private void addComment(String comment){
+    private void addComment(Comment comment, int messageID){
     	
-    	String addcomment = client
+    	Response addcomment = client
     			.target(RestServiceURL)
     			.path("/messages/{messageId}")
-    			.resolveTemplate("messageId", 1)
+    			.resolveTemplate("messageId", messageID)
     			.request(MediaType.APPLICATION_JSON)
-    			.post(comment);
-    	
-   */ 	
-    	
-    	
-   // }
+    			.post(Entity.entity(comment, MediaType.APPLICATION_JSON));
+    	}
+    
+    
+    
 }
