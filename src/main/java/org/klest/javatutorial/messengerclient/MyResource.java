@@ -48,15 +48,15 @@ public class MyResource {
     	System.out.println("Please type your username");
     	author = in.nextLine();
     	
-    	System.out.println("Welcome " + author + " You can type one of the following: /n");
     	
     	
-    	
-    	System.out.println("/nm - see all messages /na - add new messages /nType c - to see comments /nd - Delete message");
     	
     	while(true){
+    		System.out.println("Welcome " + author + " You can type one of the following: \n");
+    		System.out.println("\nm - see all messages \na - add new messages \nType c - to see comments \nd - Delete message");
+        	
 	    	if (in.nextLine().equals("m")){
-	    		//see all messages
+	    		
 	    		webclient.getMessages(messageList);
 	    		
 	    		for(int i = 0; i < messageList.size(); i++){
@@ -65,7 +65,7 @@ public class MyResource {
 	    	}
 	    	
 	    	else if (in.nextLine().equals("a")){
-	    		//add new message
+	    		
 	    		System.out.println("Pleasse enter your message: ");
 	    		message = in.nextLine();
 	    		
@@ -73,7 +73,7 @@ public class MyResource {
 	    	}
 	    	
 	    	else if (in.nextLine().equals("c")){
-	    		// see comments
+	    		
 	    		System.out.println("Please enter the ID of the message");
 	    		id = in.nextInt();
 	    		
@@ -81,12 +81,32 @@ public class MyResource {
 	    		
 	    		for(int i = 0; i < commentList.size(); i++)
 	    	    	System.out.println(commentList.get(i).toString());
-	    		//under menu comments
+	    		
+	    		
+	    		
+	    		while(true){
+	    			System.out.println("\nPlease choose one of the following: \na - Add Comment \nd - Delete Comment");
+	    			
+	    			if (in.nextLine().equals("a")){
+	    				//add comment
+	    			}
+	    			
+	    			else if (in.nextLine().equals("d")){
+	    				//delete comment
+	    			}
+	    			
+	    			else if (in.nextLine().equals("exit")){
+	    				break;
+	    			}
+	    			else {
+	    				System.out.println("the command does not exist");
+	    			}
+	    		}
 	    		
 	    	}
 	    	
 	    	else if (in.nextLine().equals("d")){
-	    		//delete messages
+	    		
 	    		System.out.println("Please enter the ID of the message you want to delete...");
 	    		id = in.nextInt();
 	    		
